@@ -11,13 +11,26 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import data.ApiClient
+import data.Repository
 import util.loadNetworkImage
+import java.lang.Exception
 
 @Composable
 fun DashboardScreen() {
     val scrollState = rememberLazyGridState()
+
+    LaunchedEffect(Unit) {
+        try {
+            val response = Repository().popularMovies()
+            println("screen$response")
+        } catch (e: Exception) {
+            println(e.localizedMessage)
+        }
+    }
 
     LazyVerticalGrid(
         state = scrollState,
@@ -30,16 +43,9 @@ fun DashboardScreen() {
             }
         ) { index ->
             Column(modifier = Modifier.padding(8.dp)) {
-                Text(
-                    text = index.toString(),
-                    style = MaterialTheme.typography.body1,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
 
-                Image(
-                    bitmap = loadNetworkImage("https://images.unsplash.com/photo-1703555508141-4397207fc6d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxNzQ1NDV8MHwxfGFsbHw0fHx8fHx8Mnx8MTcwMzk1MzUyMXw&ixlib=rb-4.0.3&q=80&w=1080"),
-                    contentDescription = null
+                MovieItem(
+                    imageUrl = "https://images.unsplash.com/photo-1703555508141-4397207fc6d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxNzQ1NDV8MHwxfGFsbHw0fHx8fHx8Mnx8MTcwMzk1MzUyMXw&ixlib=rb-4.0.3&q=80&w=1080",
                 )
 
             }
