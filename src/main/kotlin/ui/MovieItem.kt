@@ -5,8 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +29,10 @@ fun MovieItem(
         Image(
             bitmap = loadNetworkImage(imageUrl),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.sizeIn(
+                maxWidth = 220.dp,
+                maxHeight = 340.dp
+            ),
             contentScale = ContentScale.Crop
         )
         Column(
@@ -44,7 +45,7 @@ fun MovieItem(
                         )
                     )
                 )
-                .padding(20.dp),
+                .padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
