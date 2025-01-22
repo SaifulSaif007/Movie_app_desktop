@@ -24,7 +24,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
+
 @Composable
 fun DashboardScreen(
     data: DashboardData = DashboardData()
@@ -32,26 +32,7 @@ fun DashboardScreen(
     val movieData = data.dataState
     val scrollState = rememberLazyGridState()
 
-    val pagerState = rememberPagerState(0)
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            yield()
-            delay(3000)
-            pagerState.animateScrollToPage(
-                page = (pagerState.currentPage + 1) % (movieData.value.size)
-            )
-
-        }
-    }
-
     Column {
-        HorizontalPager(pageCount = movieData.value.size, state = pagerState) { page: Int ->
-            PagerContent(
-                imageUrl = "https://image.tmdb.org/t/p/" + "w780" + movieData.value[page].poster_path,
-            )
-        }
-
         LazyVerticalGrid(
             state = scrollState,
             columns = GridCells.Adaptive(minSize = 220.dp)
@@ -63,7 +44,6 @@ fun DashboardScreen(
                 }
             ) { index ->
                 Column(modifier = Modifier.padding(8.dp)) {
-
                     MovieItem(
                         imageUrl = "https://image.tmdb.org/t/p/" + "w342" + movieData.value[index].poster_path,
                         title = movieData.value[index].title ?: ""

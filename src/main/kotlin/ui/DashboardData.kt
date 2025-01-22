@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class DashboardData {
 
-    val dataState: MutableState<List<Movies>> = mutableStateOf(listOf())
+    val dataState: MutableState<List<Movies>> = mutableStateOf(emptyList())
 
     init {
         loadPopularMovie()
@@ -19,7 +19,11 @@ class DashboardData {
     private fun loadPopularMovie() {
         CoroutineScope(Dispatchers.IO).launch {
             val response = Repository().popularMovies()
-            dataState.value = response.results
+            println(response)
+
+            response?.results?.let {
+                dataState.value = it
+            }
         }
     }
 }
